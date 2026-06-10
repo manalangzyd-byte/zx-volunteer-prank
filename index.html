@@ -3,7 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>张雪峰 AI 志愿填报大数据系统（整蛊版）</title>
+    <title>智启高考志愿填报辅助系统</title>
+    <meta name="description" content="智启高考志愿填报辅助系统 - 基于院校专业数据、选科规则和分数位次的智能志愿评估工具，辅助考生生成参考方案。">
+    <meta name="keywords" content="高考志愿填报,AI志愿,大学专业,高考,志愿填报系统,2026高考,院校专业评估">
+    <meta property="og:title" content="智启高考志愿填报辅助系统">
+    <meta property="og:description" content="基于院校专业数据、选科规则和分数位次的智能志愿评估工具，辅助考生生成参考方案。">
+    <meta property="og:image" content="share-cover.svg">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="智启志愿填报辅助系统">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="智启高考志愿填报辅助系统">
+    <meta name="twitter:description" content="基于院校专业数据、选科规则和分数位次的智能志愿评估工具。">
+    <meta name="twitter:image" content="share-cover.svg">
+    <meta itemprop="name" content="智启高考志愿填报辅助系统">
+    <meta itemprop="description" content="基于院校专业数据、选科规则和分数位次的智能志愿评估工具。">
+    <meta itemprop="image" content="share-cover.svg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,16 +26,16 @@
         <header class="app-header">
             <div class="logo">
                 <span class="icon">🎯</span>
-                <span class="title">雪峰 AI 高招规划大数据平台 <span class="badge">尊享版</span></span>
+                <span class="title">智启高考志愿填报辅助系统 <span class="badge">2026版</span></span>
             </div>
-            <div class="user-status">内部测试通道 / 游客访客</div>
+            <div class="user-status">院校数据同步 / 试算模式</div>
         </header>
 
         <main class="container">
             <section id="phase-form" class="card fade-in">
                 <div class="card-header">
-                    <h2>精准测算，开启上帝视角</h2>
-                    <p>已同步全国 31 省市最新高考政策，独家真实案例库实时更新</p>
+                    <h2>智能评估志愿匹配方案</h2>
+                    <p>已同步全国 31 省市选科规则、批次线参考和院校专业数据</p>
                 </div>
 
                 <form id="volunteer-form">
@@ -30,7 +45,7 @@
                             <input type="number" id="score" min="0" max="750" placeholder="例如：580" required>
                         </div>
                         <div class="form-group half">
-                            <label for="rank">全省排名（选填，张老师强烈建议）</label>
+                            <label for="rank">全省排名（选填，建议填写以提升匹配精度）</label>
                             <input type="number" id="rank" min="1" placeholder="例如：25000">
                         </div>
                     </div>
@@ -56,7 +71,7 @@
                 <div class="trust-indicators">
                     <span>🔒 教育数据源同步</span>
                     <span>⚡ 毫秒级匹配速度</span>
-                    <span>📉 100% 避开天坑专业</span>
+                    <span>📊 院校专业数据校验</span>
                 </div>
             </section>
 
@@ -67,22 +82,13 @@
                         <div class="loader-progress-dot" id="loader-dot"></div>
                     </div>
                 </div>
-                <button id="btn-view-result" class="btn-primary hidden" type="button">查看我的天选专业</button>
+                <button id="btn-view-result" class="btn-primary hidden" type="button">查看评估结果</button>
             </section>
 
             <section id="phase-result" class="card hidden text-center">
-                <h2 class="result-subtitle">经过【上帝视角】深度推演</h2>
-                <p class="result-subtitle">系统为你锁定唯一神级出路：</p>
-                <div class="result-box">
-                    <h3 class="university">月球背面无线电职业技术大学</h3>
-                    <h1 class="major" id="result-major">月壤路由器维修与低重力 Wi-Fi 覆盖专业</h1>
-                </div>
-                <div class="reason-box">
-                    <strong>张老师核心点评：</strong>
-                    <p id="result-reason">就业半径 38 万公里，核心竞争力是信号不好时能保持情绪稳定。</p>
-                </div>
+                <div id="result-primary"></div>
                 <div class="purple-lip-status">
-                    张老师当前嘴唇发紫度：<span class="critical" id="lip-status">99.9%（危险）</span>
+                    系统综合评估状态：<span class="critical" id="lip-status">计算中</span>
                 </div>
             </section>
         </main>
@@ -92,17 +98,14 @@
         <div class="modal-backdrop"></div>
     </div>
 
+    <div id="fake-page-overlay" class="hidden"></div>
+
     <div id="bsod" class="hidden">
         <h1>:(</h1>
-        <h2>你的未来遇到问题，需要重新规划。</h2>
-        <p>系统已崩溃，因为你的分数太刺激，或者要求太离谱。</p>
-        <p>张老师由于疯狂输出，嘴唇发紫度突破 100%，CPU（大脑）已过热。</p>
+        <h2>系统遇到临时问题，正在重新载入评估模块。</h2>
+        <p>请稍候，页面将继续处理当前志愿评估请求。</p>
         <br>
-        <p>详细错误代码：<br>
-        STOP: 0x0000000DEAD (ZHANG_XUEFENG_LIPS_CRITICAL_FAILURE)<br>
-        REASON: 还在做梦呢？快去搬砖吧！</p>
-        <br>
-        <p>完成重新投胎进度：<span id="bsod-progress">0</span>%</p>
+        <p>模块恢复进度：<span id="bsod-progress">0</span>%</p>
     </div>
 
     <script src="challenges.js"></script>

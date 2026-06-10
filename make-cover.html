@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分享封面生成器 - 智启高考志愿填报辅助系统</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; display: flex; flex-direction: column; align-items: center; padding: 2rem; background: #eef4fb; color: #123a63; }
+        canvas { border: 1px solid #c8daec; margin: 1rem 0; box-shadow: 0 10px 40px rgba(18,58,99,0.16); max-width: 100%; height: auto; background: white; }
+        button { padding: 1rem 2rem; font-size: 1.05rem; background: #155da8; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        button:hover { background: #0f4f91; }
+        p { color: #5f7388; margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <h1>分享封面图生成器</h1>
+    <p>1200 x 630 PNG</p>
+    <canvas id="cover" width="1200" height="630"></canvas>
+    <button onclick="download()">下载 share-cover.png</button>
+
+    <script>
+        const canvas = document.getElementById('cover');
+        const ctx = canvas.getContext('2d');
+
+        const bg = ctx.createLinearGradient(0, 0, 1200, 630);
+        bg.addColorStop(0, '#0f3b72');
+        bg.addColorStop(0.48, '#155da8');
+        bg.addColorStop(1, '#eef6ff');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, 1200, 630);
+
+        ctx.fillStyle = 'rgba(255,255,255,0.10)';
+        ctx.beginPath();
+        ctx.arc(1080, 90, 180, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(120, 560, 220, 0, Math.PI * 2);
+        ctx.fill();
+
+        const panel = ctx.createLinearGradient(100, 92, 1100, 538);
+        panel.addColorStop(0, 'rgba(255,255,255,0.96)');
+        panel.addColorStop(1, 'rgba(234,244,255,0.92)');
+        roundRect(100, 92, 1000, 446, 22);
+        ctx.fillStyle = panel;
+        ctx.fill();
+        ctx.strokeStyle = '#d8e8f8';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#123a63';
+        ctx.font = '700 64px "Microsoft YaHei", "PingFang SC", sans-serif';
+        ctx.fillText('智启高考志愿填报辅助系统', 600, 188);
+
+        ctx.fillStyle = '#2f6fae';
+        ctx.font = '600 32px "Microsoft YaHei", "PingFang SC", sans-serif';
+        ctx.fillText('分数位次 · 选科规则 · 院校专业智能评估', 600, 252);
+
+        ctx.strokeStyle = '#9fc4e9';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(260, 304);
+        ctx.lineTo(940, 304);
+        ctx.stroke();
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#173b5f';
+        ctx.font = '28px "Microsoft YaHei", "PingFang SC", sans-serif';
+        const features = ['教育数据源同步', '毫秒级匹配速度', '院校专业数据校验'];
+        features.forEach((feature, index) => {
+            const y = 372 + index * 52;
+            ctx.beginPath();
+            ctx.arc(280, y - 9, 9, 0, Math.PI * 2);
+            ctx.fillStyle = '#2f80ed';
+            ctx.fill();
+            ctx.fillStyle = '#173b5f';
+            ctx.fillText(feature, 320, y);
+        });
+
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#eaf4ff';
+        ctx.font = '22px "Microsoft YaHei", "PingFang SC", sans-serif';
+        ctx.fillText('仅供志愿填报参考，最终以招生考试机构和高校公布信息为准', 600, 570);
+
+        function roundRect(x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function download() {
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'share-cover.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/png');
+        }
+    </script>
+</body>
+</html>
